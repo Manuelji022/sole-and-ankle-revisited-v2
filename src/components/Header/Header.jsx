@@ -1,10 +1,13 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import { COLORS, WEIGHTS } from '../../constants';
+import { COLORS, WEIGHTS, BREAKPOINTS } from '../../constants';
 import Logo from '../Logo';
 import SuperHeader from '../SuperHeader';
 import MobileMenu from '../MobileMenu';
+import UnstyledButton from '../UnstyledButton';
+import Icon from '../Icon';
+import VisuallyHidden from '../VisuallyHidden';
 
 const Header = () => {
   const [showMobileMenu, setShowMobileMenu] = React.useState(false);
@@ -24,7 +27,24 @@ const Header = () => {
           <NavLink href="/kids">Kids</NavLink>
           <NavLink href="/collections">Collections</NavLink>
         </Nav>
-        <Side />
+        <MobileActions>
+          <UnstyledButton aria-label="Search">
+            <Icon id="search" size={24} strokeWidth={2} />
+          </UnstyledButton>
+
+          <UnstyledButton aria-label="Shopping bag">
+            <Icon id="shopping-bag" size={24} strokeWidth={2} />
+          </UnstyledButton>
+
+          <UnstyledButton
+            aria-label="Open menu"
+            aria-expanded={showMobileMenu}
+            onClick={() => setShowMobileMenu(true)}
+          >
+            <Icon id="menu" size={24} strokeWidth={2} />
+          </UnstyledButton>
+
+        </MobileActions>
       </MainHeader>
 
       <MobileMenu
@@ -41,14 +61,34 @@ const MainHeader = styled.div`
   padding: 18px 32px;
   height: 72px;
   border-bottom: 1px solid ${COLORS.gray[300]};
+
+  @media (max-width: ${BREAKPOINTS.tablet}rem) {
+    border-top: 4px solid ${COLORS.gray[900]};
+    padding: 1.2rem 0.8rem;
+    gap: 1.2rem;
+    justify-content: space-between;
+    height: fit-content;
+  }
 `;
 
 const Nav = styled.nav`
   display: flex;
   gap: 48px;
   margin: 0px 48px;
+
+  @media (max-width: ${BREAKPOINTS.tablet}rem) {
+      display: none;
+  }
 `;
 
+const MobileActions = styled.div`
+  display: none;
+
+  @media (max-width: ${BREAKPOINTS.tablet}rem) {
+    display: flex;
+    gap: calc(32 / 20 * 1rem);
+  }
+`;
 const Side = styled.div`
   flex: 1;
 `;
